@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'AppBar/appbar.dart';
+import 'CustomIcons.dart';
 
 void main() {
   runApp(const MyApp());
@@ -57,6 +58,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
+  int currentPageIndex = 0;
 
   void _incrementCounter() {
     setState(() {
@@ -124,7 +126,34 @@ class _MyHomePageState extends State<MyHomePage> {
         onPressed: _incrementCounter,
         tooltip: 'Increment',
         child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      ),
+      
+      bottomNavigationBar: NavigationBar(
+        onDestinationSelected: (int index) {
+          setState(() {
+            currentPageIndex = index;
+          });
+        },
+        selectedIndex: currentPageIndex,
+        destinations: const <Widget>[
+          NavigationDestination(
+            selectedIcon: Icon(CustomIcons.home,),
+            icon: Icon(CustomIcons.home_outline,),
+            label:'Acceuil',
+          ),
+          NavigationDestination(
+            selectedIcon: Icon(CustomIcons.music,),
+            icon: Icon(CustomIcons.music_outline,),
+            label: 'Liste des albums',
+          ),
+          NavigationDestination(
+            selectedIcon: Icon(CustomIcons.cog),
+            icon: Icon(CustomIcons.cog_outline,),
+            label: 'Paramètres',
+          ),
+        ],
+      ),
+
     );
   }
 }

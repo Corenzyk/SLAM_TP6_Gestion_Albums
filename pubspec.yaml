@@ -77,7 +77,7 @@ flutter:
   fonts:
     - family: CustomIcons
       fonts:
-        - asset: fonts/CustomsIcons.ttf
+        - asset: fonts/CustomIcons.ttf
   #     - asset: fonts/Schyler-Italic.ttf
   #       style: italic
   #   - family: Trajan Pro
