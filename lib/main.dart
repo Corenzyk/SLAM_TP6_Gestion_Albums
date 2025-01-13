@@ -8,7 +8,7 @@ import 'dart:convert';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  final themeStr = await rootBundle.loadString('assets/ThemeAlbum.json');
+  final themeStr = await rootBundle.loadString('assets/appainter_theme.json');
   final themeJson = jsonDecode(themeStr);
   final theme = ThemeDecoder.decodeThemeData(themeJson)!;
   runApp(MyApp(theme : theme));
@@ -74,12 +74,12 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar_Principal(
         title: "Gestion des albums",
-        couleurFond: Colors.green,
-        couleurText: Colors.white,
+        //couleurFond: Colors.green,
+        //couleurText: Colors.white,
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.lightbulb),
-            color: Colors.white,
+
             onPressed: () {
             }
           )
@@ -102,12 +102,12 @@ class _MyHomePageState extends State<MyHomePage> {
           )
         ),
         Container(
-          color: Colors.white,
+
           alignment: Alignment.center,
           child: const Text('Générer un nombre aléatoire')
         ),
         Container(
-          color: Colors.white,
+
           alignment: Alignment.center,
           child: const Text('Paramètres'),
         ),
@@ -119,12 +119,11 @@ class _MyHomePageState extends State<MyHomePage> {
         child: const Icon(Icons.add),
       ),
       bottomNavigationBar: NavigationBar(
-        backgroundColor: Colors.green,
-        indicatorColor: Colors.white,
+
 
         onDestinationSelected: (int index) {
           setState(() {
-          currentPageIndex = index;
+            currentPageIndex = index;
           });
         },
         selectedIndex: currentPageIndex,
@@ -146,7 +145,6 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ],
       ),// This trailing comma makes auto-formatting nicer for build methods.
-
     );
   }
 }

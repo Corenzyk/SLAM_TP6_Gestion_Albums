@@ -6,11 +6,20 @@ class CustomsIcons {
   static const _kFontFam = 'CustomsIcons';
   static const String? _kFontPkg = null;
 
-  static const IconData gear_outline = IconData(0xe800, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData gear = IconData(0xe801, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData music = IconData(0xe802, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData music_outline = IconData(0xe803, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData home = IconData(0xe804, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData home_outline = IconData(0xe805, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData lightbulb = IconData(0xf0eb, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData search = IconData(0xf50d, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData gear_outline = IconData(
+      0xe800, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData gear = IconData(
+      0xe801, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData music = IconData(
+      0xe802, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData music_outline = IconData(
+      0xe803, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData home = IconData(
+      0xe804, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData home_outline = IconData(
+      0xe805, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData lightbulb = IconData(
+      0xf0eb, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData search = IconData(
+      0xf50d, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+}
