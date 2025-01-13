@@ -118,7 +118,6 @@ class _MyHomePageState extends State<MyHomePage> {
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ),
-
       bottomNavigationBar: NavigationBar(
         backgroundColor: Colors.green,
         indicatorColor: Colors.white,
@@ -147,6 +146,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ],
       ),// This trailing comma makes auto-formatting nicer for build methods.
+
     );
   }
 }
