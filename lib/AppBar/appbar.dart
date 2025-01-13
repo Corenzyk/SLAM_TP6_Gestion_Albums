@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../CustomIcons.dart';
 
 class AppBar_Principal extends StatefulWidget implements PreferredSizeWidget{
   final String title;
@@ -23,7 +24,7 @@ class _AppBar_PrincipalState extends State<AppBar_Principal> {
       backgroundColor: widget.couleurFond,
       actions: <Widget>[
         IconButton(
-          icon: Icon(Icons.search),
+          icon: Icon(CustomsIcons.search),
           color : widget.couleurText,
           onPressed: () {
           },

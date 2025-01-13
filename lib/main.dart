@@ -1,37 +1,30 @@
 import 'package:flutter/material.dart';
 import 'AppBar/appbar.dart';
+import 'CustomIcons.dart';
+import 'package:json_theme/json_theme.dart';
+import 'package:flutter/services.dart';
+import 'dart:convert';
 
-void main() {
-  runApp(const MyApp());
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final themeStr = await rootBundle.loadString('assets/ThemeAlbum.json');
+  final themeJson = jsonDecode(themeStr);
+  final theme = ThemeDecoder.decodeThemeData(themeJson)!;
+  runApp(MyApp(theme : theme));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final ThemeData theme;
 
-  // This widget is the root of your application.
+  const MyApp({Key? key, required this.theme}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a purple toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
+      title: 'TP6 - Gestion des albums',
+      debugShowCheckedModeBanner: false,
+      theme: theme,
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
@@ -57,6 +50,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
+  int currentPageIndex = 0;
 
   void _incrementCounter() {
     setState(() {
@@ -91,40 +85,68 @@ class _MyHomePageState extends State<MyHomePage> {
           )
         ],
       ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          //
-          // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
-          // action in the IDE, or press "p" in the console), to see the
-          // wireframe for each widget.
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
+      body: <Widget>[
+        Container(
+          child: ListView(
+            children: [
+              const Text(
+                'You have pushed the button this many times:',
+                textAlign: TextAlign.center,
+              ),
+              Text(
+                '$_counter',
+                style: Theme.of(context).textTheme.headlineMedium,
+                textAlign: TextAlign.center,
+              ),
+            ],
+          )
         ),
-      ),
+        Container(
+          color: Colors.white,
+          alignment: Alignment.center,
+          child: const Text('Générer un nombre aléatoire')
+        ),
+        Container(
+          color: Colors.white,
+          alignment: Alignment.center,
+          child: const Text('Paramètres'),
+        ),
+      ][currentPageIndex],
+
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
         tooltip: 'Increment',
         child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      ),
+
+      bottomNavigationBar: NavigationBar(
+        backgroundColor: Colors.green,
+        indicatorColor: Colors.white,
+
+        onDestinationSelected: (int index) {
+          setState(() {
+          currentPageIndex = index;
+          });
+        },
+        selectedIndex: currentPageIndex,
+        destinations: <Widget>[
+          NavigationDestination(
+            icon: Icon(CustomsIcons.home),
+            selectedIcon: Icon(CustomsIcons.home_outline),
+            label: "Accueil",
+          ),
+          NavigationDestination(
+            icon: Icon(CustomsIcons.music),
+            selectedIcon: Icon(CustomsIcons.music_outline),
+            label: "Liste des albums",
+          ),
+          NavigationDestination(
+            icon: Icon(CustomsIcons.gear),
+            selectedIcon: Icon(CustomsIcons.gear_outline),
+            label: "Paramètres",
+          ),
+        ],
+      ),// This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
