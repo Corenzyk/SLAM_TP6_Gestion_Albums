@@ -17,24 +17,24 @@ Future<void> main() async {
   final themeJson_dark = jsonDecode(themeStr_dark);
   final theme_dark = ThemeDecoder.decodeThemeData(themeJson_dark)!;
 
-  runApp(MyApp(theme_light : theme_light, theme_dark : theme_dark));
+  runApp(MyApp(themeLight : theme_light, themeDark : theme_dark));
 }
 
 class MyApp extends StatelessWidget {
-  final ThemeData theme_light;
-  final ThemeData theme_dark;
-  final themeController = ThemeController();
+  final ThemeData themeLight;
+  final ThemeData themeDark;
+  final theme_Controller = ThemeController();
 
-  MyApp({Key? key, required this.theme_light, required this.theme_dark}) : super(key: key);
+  MyApp({Key? key, required this.themeLight, required this.themeDark}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'TP6 - Gestion des albums',
       debugShowCheckedModeBanner: false,
-      theme: theme_light,
-      darkTheme: theme_dark,
-      home: MyHomePage(title: 'Flutter Demo Home Page', themeController: themeController),
+      theme: themeLight,
+      darkTheme: themeDark,
+      home: MyHomePage(title: 'Flutter Demo Home Page', themeController: theme_Controller),
     );
   }
 }
@@ -76,22 +76,27 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: <Widget>[
         Container(
-          child: ListView(
+          child: Column(
             children: [
-              const Text(
-                'You have pushed the button this many times:',
-                textAlign: TextAlign.center,
+              Card(
+                child: Row(
+                  children: [
+                    Image.asset("assets/vinyle.png",height: 125,),
+                    Text("Bienvenue sur l'application de gestion d'album")
+                  ],
+                ),
+                color: Colors.lightGreen,
               ),
-              Text(
-                '$_counter',
-                style: Theme.of(context).textTheme.headlineMedium,
-                textAlign: TextAlign.center,
+              Card(
+                child: Text("News\nDernières actualités")
               ),
+              Card(
+                child: Text("Version 1 en cours de développement\nWait and see")
+              )
             ],
           )
         ),
         Container(
-
           alignment: Alignment.center,
           child: const Text('Générer un nombre aléatoire')
         ),
@@ -107,9 +112,8 @@ class _MyHomePageState extends State<MyHomePage> {
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ),
+
       bottomNavigationBar: NavigationBar(
-
-
         onDestinationSelected: (int index) {
           setState(() {
             currentPageIndex = index;
