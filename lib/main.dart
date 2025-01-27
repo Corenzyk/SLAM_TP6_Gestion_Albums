@@ -4,45 +4,46 @@ import 'CustomIcons.dart';
 import 'package:json_theme/json_theme.dart';
 import 'package:flutter/services.dart';
 import 'dart:convert';
+import 'data/controller/ThemeController.dart';
 
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  final themeStr = await rootBundle.loadString('assets/appainter_theme.json');
-  final themeJson = jsonDecode(themeStr);
-  final theme = ThemeDecoder.decodeThemeData(themeJson)!;
-  runApp(MyApp(theme : theme));
+  final themeStr_light = await rootBundle.loadString('assets/theme_gestionAlbum_light.json');
+  final themeJson_light = jsonDecode(themeStr_light);
+  final theme_light = ThemeDecoder.decodeThemeData(themeJson_light)!;
+
+  final themeStr_dark = await rootBundle.loadString('assets/theme_gestionAlbum_dark.json');
+  final themeJson_dark = jsonDecode(themeStr_dark);
+  final theme_dark = ThemeDecoder.decodeThemeData(themeJson_dark)!;
+
+  runApp(MyApp(theme_light : theme_light, theme_dark : theme_dark));
 }
 
 class MyApp extends StatelessWidget {
-  final ThemeData theme;
+  final ThemeData theme_light;
+  final ThemeData theme_dark;
+  final themeController = ThemeController();
 
-  const MyApp({Key? key, required this.theme}) : super(key: key);
+  MyApp({Key? key, required this.theme_light, required this.theme_dark}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'TP6 - Gestion des albums',
       debugShowCheckedModeBanner: false,
-      theme: theme,
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      theme: theme_light,
+      darkTheme: theme_dark,
+      home: MyHomePage(title: 'Flutter Demo Home Page', themeController: themeController),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
+  MyHomePage({super.key, required this.title, required this.themeController});
 
   final String title;
+  final ThemeController themeController;
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -54,33 +55,21 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _incrementCounter() {
     setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
       _counter++;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
     return Scaffold(
       appBar: AppBar_Principal(
         title: "Gestion des albums",
-        //couleurFond: Colors.green,
-        //couleurText: Colors.white,
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.lightbulb),
+            icon: Icon(ThemeMode.system == ThemeMode.dark ? Icons.lightbulb_outline : Icons.lightbulb),
 
             onPressed: () {
+              widget.themeController.toggleTheme();
             }
           )
         ],
@@ -129,18 +118,18 @@ class _MyHomePageState extends State<MyHomePage> {
         selectedIndex: currentPageIndex,
         destinations: <Widget>[
           NavigationDestination(
-            icon: Icon(CustomsIcons.home),
-            selectedIcon: Icon(CustomsIcons.home_outline),
+            icon: Icon(CustomIcons.home),
+            selectedIcon: Icon(CustomIcons.home_outline),
             label: "Accueil",
           ),
           NavigationDestination(
-            icon: Icon(CustomsIcons.music),
-            selectedIcon: Icon(CustomsIcons.music_outline),
+            icon: Icon(CustomIcons.music),
+            selectedIcon: Icon(CustomIcons.music_outline),
             label: "Liste des albums",
           ),
           NavigationDestination(
-            icon: Icon(CustomsIcons.gear),
-            selectedIcon: Icon(CustomsIcons.gear_outline),
+            icon: Icon(CustomIcons.cog),
+            selectedIcon: Icon(CustomIcons.cog_outline),
             label: "Paramètres",
           ),
         ],

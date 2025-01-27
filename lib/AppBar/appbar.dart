@@ -3,8 +3,6 @@ import '../CustomIcons.dart';
 
 class AppBar_Principal extends StatefulWidget implements PreferredSizeWidget{
   final String title;
-  //final Color couleurFond;
-  //final Color couleurText;
   final List<Widget> actions;
 
   AppBar_Principal({Key? key, required this.title,  this.actions = const []}) : super(key: key);
@@ -21,11 +19,9 @@ class _AppBar_PrincipalState extends State<AppBar_Principal> {
   Widget build(BuildContext context) {
     return AppBar(
       title: Text(widget.title),
-      //backgroundColor: widget.couleurFond,
       actions: <Widget>[
         IconButton(
-          icon: Icon(CustomsIcons.search),
-          //color : widget.couleurText,
+          icon: Icon(CustomIcons.search),
           onPressed: () {
           },
         ),
