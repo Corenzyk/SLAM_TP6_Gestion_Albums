@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'AppBar/appbar.dart';
+import 'widget/appbar.dart';
+import 'widget/album.dart';
 import 'CustomIcons.dart';
 import 'package:json_theme/json_theme.dart';
 import 'package:flutter/services.dart';
@@ -29,12 +30,19 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'TP6 - Gestion des albums',
-      debugShowCheckedModeBanner: false,
-      theme: themeLight,
-      darkTheme: themeDark,
-      home: MyHomePage(title: 'Flutter Demo Home Page', themeController: theme_Controller),
+    return ValueListenableBuilder(
+      valueListenable: theme_Controller,
+      builder: (context, themeMode, _) {
+        return MaterialApp(
+          title: 'TP6 - Gestion des albums',
+          debugShowMaterialGrid: false,
+          debugShowCheckedModeBanner: false,
+          theme: themeLight,
+          darkTheme: themeDark,
+          themeMode: themeMode,
+          home: MyHomePage(title: 'Page d\'accueil', themeController: theme_Controller),
+        );
+      },
     );
   }
 }
@@ -50,14 +58,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
   int currentPageIndex = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -81,14 +82,32 @@ class _MyHomePageState extends State<MyHomePage> {
               Card(
                 child: Row(
                   children: [
-                    Image.asset("assets/vinyle.png",height: 125,),
-                    Text("Bienvenue sur l'application de gestion d'album")
+                    Image.asset("images/imgAccueil/vinyltransp.webp",height: 125,),
+                    Expanded(
+                        child: Text(
+                            "Bienvenue sur l'application de gestion d'album",
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          )
+                        )
+                    )
                   ],
                 ),
-                color: Colors.lightGreen,
+                color: Color(0xff329ba8),
               ),
               Card(
-                child: Text("News\nDernières actualités")
+                child: Wrap(
+                  children: [
+                    Text("Bienvenue sur l'application de gestion d'album",
+                      style: TextStyle(
+                        fontSize: 15,
+                      ),
+                    ),
+                    Text("\nVoici les nouveaux albums ajoutés"),
+
+                  ],
+                )
               ),
               Card(
                 child: Text("Version 1 en cours de développement\nWait and see")
@@ -97,21 +116,73 @@ class _MyHomePageState extends State<MyHomePage> {
           )
         ),
         Container(
+          color: Color(0xff329ba8),
           alignment: Alignment.center,
-          child: const Text('Générer un nombre aléatoire')
+          child: ListView(
+            shrinkWrap: true, padding: const EdgeInsets.fromLTRB(2.0, 10.0, 2.0, 10.0),
+            children: <Widget> [
+              Album(
+                  nomAlbum: "And justice for all",
+                  description: "L'album marque une évolution importante dans le style du groupe. Les tempos sont plus lents, les morceaux plus courts et leurs structures beaucoup plus simples, aspirant ainsi à du simple rock. C'est principalement un album de heavy metal, et il n'y a plus beaucoup de traces de thrash metal. ",
+                  nomGroupe: "Metallica",
+                  image: "And justice for all.jpg"
+              ),
+              Album(
+                  nomAlbum: "Hardwired",
+                  description: "L'album marque une évolution importante dans le style du groupe. Les tempos sont plus lents, les morceaux plus courts et leurs structures beaucoup plus simples, aspirant ainsi à du simple rock. C'est principalement un album de heavy metal, et il n'y a plus beaucoup de traces de thrash metal. ",
+                  nomGroupe: "Metallica",
+                  image: "Hardwired.jpg"
+              ),
+              Album(
+                  nomAlbum: "Kill'em all",
+                  description: "L'album marque une évolution importante dans le style du groupe. Les tempos sont plus lents, les morceaux plus courts et leurs structures beaucoup plus simples, aspirant ainsi à du simple rock. C'est principalement un album de heavy metal, et il n'y a plus beaucoup de traces de thrash metal. ",
+                  nomGroupe: "Metallica",
+                  image: "Kill'em all.jpg"
+              ),
+              Album(
+                  nomAlbum: "Master of puppets",
+                  description: "L'album marque une évolution importante dans le style du groupe. Les tempos sont plus lents, les morceaux plus courts et leurs structures beaucoup plus simples, aspirant ainsi à du simple rock. C'est principalement un album de heavy metal, et il n'y a plus beaucoup de traces de thrash metal. ",
+                  nomGroupe: "Metallica",
+                  image: "Master of puppets.jpg"
+              ),
+              Album(
+                  nomAlbum: "Metallica",
+                  description: "L'album marque une évolution importante dans le style du groupe. Les tempos sont plus lents, les morceaux plus courts et leurs structures beaucoup plus simples, aspirant ainsi à du simple rock. C'est principalement un album de heavy metal, et il n'y a plus beaucoup de traces de thrash metal. ",
+                  nomGroupe: "Metallica",
+                  image: "Metallica.jpg"
+              ),
+              Album(
+                  nomAlbum: "Ride the lightning",
+                  description: "L'album marque une évolution importante dans le style du groupe. Les tempos sont plus lents, les morceaux plus courts et leurs structures beaucoup plus simples, aspirant ainsi à du simple rock. C'est principalement un album de heavy metal, et il n'y a plus beaucoup de traces de thrash metal. ",
+                  nomGroupe: "Metallica",
+                  image: "Ride the lightning.jpg"
+              ),
+            ],
+          )
         ),
         Container(
-
-          alignment: Alignment.center,
-          child: const Text('Paramètres'),
+          child: Column(
+            children: [
+              Card(
+                child: Text("Configurer les paramètres de l'application\nWork in progress")
+              ),
+              Card(
+                child: Text("Param2\nWork in progress")
+              )
+            ],
+          ),
         ),
       ][currentPageIndex],
 
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ),
+      floatingActionButton: (currentPageIndex == 0)
+          ? FloatingActionButton(
+            onPressed: () {
+              // Add your onPressed code here!
+            },
+            child: Icon(Icons.add),
+            backgroundColor: Color(0xff329ba8),
+          )
+        : null,
 
       bottomNavigationBar: NavigationBar(
         onDestinationSelected: (int index) {
@@ -137,7 +208,7 @@ class _MyHomePageState extends State<MyHomePage> {
             label: "Paramètres",
           ),
         ],
-      ),// This trailing comma makes auto-formatting nicer for build methods.
+      ),
     );
   }
 }
